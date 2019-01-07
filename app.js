@@ -1,13 +1,31 @@
-const USER = 'wessenstam';
-const PASS = 'Sas061251';
-const REPO = 'github.com/wessenstam/apitest';
- 
-const git = require('simple-git/promise');
-const remote = `https://${USER}:${PASS}@${REPO}`;
+const simpleGit = require('simple-git');
 
+
+// Git status request
+async function status (workingDir) {
+   const git = require('simple-git/promise');
+   
+   let statusSummary = null;
+   try {
+      statusSummary = await git(workingDir).status();
+   }
+   catch (e) {
+      // handle the error
+   }
+   
+   return statusSummary;
+}
+
+// Git list repos
+
+// using the async function
+status(__dirname).then(status => console.log(status));
+
+// using async list function
 require('simple-git')()
-     .outputHandler((command, stdout, stderr) => {
-        stdout.pipe(process.stdout);
-        stderr.pipe(process.stderr);
-     })
-     .checkout('https://github.com/wessenstam/apitest.git');
+    .listRemote(['--get-url'], (err, data) => {
+        if (!err) {
+            console.log('Remote url for repository at ' + __dirname + ':');
+            console.log(data);
+        }
+    });
