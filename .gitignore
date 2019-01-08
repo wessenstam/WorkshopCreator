@@ -1,6 +1,6 @@
 # npm modules #
 ###############
-node_modules
+node_modules/
 
 # OS generated files #
 ######################
@@ -13,5 +13,5 @@ Thumbs.db
 
 # Build files #
 ###############
-_build
-build
+_build/
+build/
