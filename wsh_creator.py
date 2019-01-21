@@ -40,6 +40,11 @@ def Create_UI(dict):
     var=StringVar()
     module_list=[]
 
+    #Function for throwng errors
+    def throw_error(message):
+        messagebox.showerror('Error has occured','The receiving error has been: ' + str(message) + '\nThe program will now stop')
+        exit()
+
     # Get the selected parts of the workshop and put them in a list
     def var_states(key):
         module_list.append(key)
@@ -52,22 +57,23 @@ def Create_UI(dict):
         for value in module_list:
             # Checking to see if the directory already exists. If so run pull not clone
             if os.path.exists('./'+value):
-                print('Chaning to pull and not clone')
+                # DEBUG print('Chaning to pull and not clone')
                 cmd_to_run='cd ./' + value + ' && git pull && cd ..'
                 var_out=subprocess.Popen([cmd_to_run], shell=True, stderr=subprocess.PIPE)
-                # check that the clone has been successfull. If not throw error and the received errormessage
+
+                # If any issues, show an error message and kill the program
                 if var_out.returncode is not None:
-                    messagebox.showerror('Error has occured','The receiving error has been: ' + str(var_out.communicate()) + '\nThe program will now stop')
-                    exit()
+                    throw_error(var_out.communicate())
 
             else:
-                print('Cloning ' + value + ' from ' + right_dict[value] + ' (' + str(count) + ' of '  + str(len(module_list)) + ')')
+                #DEBUG print('Cloning ' + value + ' from ' + right_dict[value] + ' (' + str(count) + ' of '  + str(len(module_list)) + ')')
                 cmd_to_run='git clone ' + right_dict[value]
                 var_out=subprocess.Popen([cmd_to_run], shell=True, stderr=subprocess.PIPE)
-                if var_out.returncode is not None:
-                    messagebox.showerror('Error has occured','The receiving error has been: ' + str(var_out.communicate()) + '\nThe program will now stop')
-                    exit()
-                
+
+                # If any issues, show an error message and kill the program
+                if var_out.returncode is not None: 
+                    throw_error(var_out.communicate())
+
             # Counter +1
             count +=1
 
@@ -82,7 +88,7 @@ def Create_UI(dict):
         count += 1
 
     # If the Quit button is selected, kill the app
-    # If the Show button is clicked, show the list that has been selected
+    # If the Create button is clicked, create the list that has been selected
     Button(master, text='Create', command=selected_modules).grid(row=count+1, sticky=W, pady=4)
     Button(master, text='Quit', command=master.quit).grid(row=count+1, sticky=E, pady=4)
     
