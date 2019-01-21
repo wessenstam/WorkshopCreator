@@ -3,8 +3,12 @@ import requests
 import json
 import html
 from tkinter import *
+from tkinter import messagebox
 import subprocess
+import os
 
+
+# Function for pulling the repos form the URL
 def Repo_Pull(http_url):
 
     # Get the full html urls and the name for the workshops repos
@@ -27,7 +31,7 @@ def Repo_Pull(http_url):
     # Combine the two lists to a new Dictionairy
     return dict(zip(list_name_url,list_html_url))
     
-
+# Function for the UI and related stuff
 def Create_UI(dict):
 
     # Set some variables
@@ -42,22 +46,34 @@ def Create_UI(dict):
         #print("Selected: " + key)
         #print("Length of the Module_list= "+str(len(module_list)))
 
-    # Clone the selected modules from github
+    # Clone or Pull the selected modules from github
     def selected_modules():
-        print("The following items have been selected:")
         count = 1
         for value in module_list:
-            print('Cloning ' + value + ' from ' + right_dict[value] + ' (' + str(count) + ' of '  + str(len(module_list)) + ')')
-            cmd_to_run='git clone ' + right_dict[value]
-            var_out=subprocess.Popen([cmd_to_run], shell=True, stderr=subprocess.PIPE)
+            # Checking to see if the directory already exists. If so run pull not clone
+            if os.path.exists('./'+value):
+                print('Chaning to pull and not clone')
+                cmd_to_run='cd ./' + value + ' && git pull && cd ..'
+                var_out=subprocess.Popen([cmd_to_run], shell=True, stderr=subprocess.PIPE)
+                # check that the clone has been successfull. If not throw error and the received errormessage
+                if var_out.returncode is not None:
+                    messagebox.showerror('Error has occured','The receiving error has been: ' + str(var_out.communicate()) + '\nThe program will now stop')
+                    exit()
 
+            else:
+                print('Cloning ' + value + ' from ' + right_dict[value] + ' (' + str(count) + ' of '  + str(len(module_list)) + ')')
+                cmd_to_run='git clone ' + right_dict[value]
+                var_out=subprocess.Popen([cmd_to_run], shell=True, stderr=subprocess.PIPE)
+                if var_out.returncode is not None:
+                    messagebox.showerror('Error has occured','The receiving error has been: ' + str(var_out.communicate()) + '\nThe program will now stop')
+                    exit()
+                
             # Counter +1
             count +=1
 
 
     # Create the GUI
-    Label(master, text="Your selection:").grid(row=0, sticky=W)
-    
+    Label(master, text="Make your selection:").grid(row=0, sticky=W)
     
     # For all Repos found, create a checkbox. As soon as the checkbox is ticked, send info to a list
     for value_field in right_dict:
@@ -67,7 +83,7 @@ def Create_UI(dict):
 
     # If the Quit button is selected, kill the app
     # If the Show button is clicked, show the list that has been selected
-    Button(master, text='Show', command=selected_modules).grid(row=count+1, sticky=W, pady=4)
+    Button(master, text='Create', command=selected_modules).grid(row=count+1, sticky=W, pady=4)
     Button(master, text='Quit', command=master.quit).grid(row=count+1, sticky=E, pady=4)
     
     mainloop()
@@ -77,6 +93,6 @@ url='http://api.github.com/users/nutanixworkshops/repos'
 
 # Call the function to pull the list of the repos
 right_dict=Repo_Pull(url)
-#print(right_dict)
 
+# Call the create the UI components
 Create_UI(right_dict)
