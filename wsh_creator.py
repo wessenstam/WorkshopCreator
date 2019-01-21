@@ -6,7 +6,10 @@ from tkinter import *
 from tkinter import messagebox
 import subprocess
 import os
+import sys
 
+if sys.version_info[0] < 3:
+    raise Exception("Must be using Python 3")
 
 # Function for pulling the repos form the URL
 def Repo_Pull(http_url):
