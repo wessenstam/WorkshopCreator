@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4",
-    "json-query": "^2.2.2",
+    "jsonpath": "^1.0.0",
     "simple-git": "^1.107.0"
   }
 }
