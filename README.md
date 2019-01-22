@@ -9,8 +9,8 @@ A python script that makes it possible to:
 
 <H2 color="RED">MAKE SURE YOU HAVE PYTHON 3 INSTALLED</H2>
 <b>For now Mac OS X or Linux only</b>
-For Mac users: https://wsvincent.com/install-python3-mac/<BR>
-For Linux users: https://docs.python-guide.org/starting/install3/linux/ <font color="red">(Currectly being tested)</font>
+<p>For Mac users: https://wsvincent.com/install-python3-mac/</p>
+<p>For Linux users: https://docs.python-guide.org/starting/install3/linux/ <font color="red">(Currectly being tested)</font></p>
 
 
 
@@ -18,6 +18,7 @@ For Linux users: https://docs.python-guide.org/starting/install3/linux/ <font co
 - Create a new index.rst based in the index.rst from the cloned modules<br>
 - Integrate Shu's creation script from https://github.com/shuguet/how<br>
 - More interactive order selection of the modules to be put in the Workshop. Now it creates the workshop on order of selection<br>
+- Windows version<br>
 
 <h3>Usage</h3>
 
