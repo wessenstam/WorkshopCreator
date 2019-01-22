@@ -7,7 +7,7 @@ A python script that makes it possible to:
 4. Create a new index.rst file which hold all the cloned modules
 5. Integrate with Shu's script to generate the HTML/Live version of the newly build Workshop
 
-<H2 color="RED">MAKE SURE YOU HAVE PYHTON 3 INSTALLED</H2>
+<H2 color="RED">MAKE SURE YOU HAVE PYTHON 3 INSTALLED</H2>
 <b>For now Mac OS X or Linux only</b>
 For Mac users: https://wsvincent.com/install-python3-mac/<BR>
 For Linux users: https://docs.python-guide.org/starting/install3/linux/ <font color="red">(Currectly being tested)</font>
