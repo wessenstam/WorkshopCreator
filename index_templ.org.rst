@@ -1,4 +1,4 @@
-.. title:: Workshop created holding 1
+.. title:: Splunk on AHV
 
 .. toctree::
   :maxdepth: 2
@@ -6,6 +6,25 @@
   :name: _labs
   :hidden:
 
+  examplelab1/examplelab1
+  examplelab2/examplelab2
+
+.. toctree::
+  :maxdepth: 2
+  :caption: Optional Labs
+  :name: _optional_labs
+  :hidden:
+
+  examplelab3/examplelab3
+
+.. toctree::
+  :maxdepth: 2
+  :caption: Appendix
+  :name: _appendix
+  :hidden:
+
+  appendix/glossary
+  appendix/otherstuff
 
 .. _getting_started:
 
